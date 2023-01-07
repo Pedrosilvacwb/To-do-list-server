@@ -10,7 +10,7 @@ export interface IUserResponse {
   email: string;
   imgUrl: string;
   createdAt: Date;
-  activities: [];
+  activities: unknown[];
 }
 
 export interface IUserUpdate {
@@ -18,4 +18,9 @@ export interface IUserUpdate {
   email?: string;
   password?: string;
   imgUrl?: string;
+}
+
+export interface IUserLogin {
+  email: string;
+  password: string;
 }
