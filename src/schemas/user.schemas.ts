@@ -24,6 +24,7 @@ export const userResponseSchema = yup.object().shape({
   email: yup.string(),
   imgUrl: yup.string().nullable(),
   createdAt: yup.date(),
+  isActive: yup.boolean(),
   activities: yup.array(),
 });
 

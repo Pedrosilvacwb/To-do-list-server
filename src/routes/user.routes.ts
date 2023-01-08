@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import {
   createUserController,
+  deleteUserController,
   retireveUserController,
+  updateUserController,
 } from '../controllers/user.controllers';
 import {
   validateUserRequestDataMiddleware,
@@ -18,5 +20,8 @@ userRouter.post(
 );
 
 userRouter.get('/:id', verifyTokenMiddleware, retireveUserController);
+
+userRouter.patch('/:id', verifyTokenMiddleware, updateUserController);
+userRouter.delete('/:id', verifyTokenMiddleware, deleteUserController);
 
 export default userRouter;

@@ -10,7 +10,8 @@ export interface IUserResponse {
   email: string;
   imgUrl: string;
   createdAt: Date;
-  activities: unknown[];
+  isActive: boolean;
+  activities?: unknown[];
 }
 
 export interface IUserUpdate {
