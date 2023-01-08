@@ -1,5 +1,5 @@
 export interface IActivityRequest {
-  name: string;
-  description: string;
-  priority: number;
+  name?: string;
+  description?: string;
+  priority?: number;
 }
