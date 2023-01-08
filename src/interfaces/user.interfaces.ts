@@ -11,7 +11,7 @@ export interface IUserResponse {
   imgUrl: string;
   createdAt: Date;
   isActive: boolean;
-  activities?: unknown[];
+  activities: unknown[];
 }
 
 export interface IUserUpdate {

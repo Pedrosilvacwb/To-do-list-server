@@ -28,7 +28,10 @@ export const retireveUserService = async (
   id: string,
 ): Promise<IUserResponse> => {
   const userRepo = AppDataSource.getRepository(Users);
-  const user = await userRepo.findOne({ where: { id: id } });
+  const user = await userRepo.findOne({
+    where: { id: id },
+    relations: { activities: true },
+  });
   if (!user) throw new AppError('Usuário não encontrado!', 404);
   const userDisplay = userResponseSchema.validate(user, {
     stripUnknown: true,
@@ -45,7 +48,7 @@ export const updateUserService = async (
   const userToUpdate = await userRepo.findOne({
     where: { id: id },
   });
-  if (!userToUpdate) throw new AppError('Usuário não encontrado!', 404);
+
   userToUpdate.email = payload.email ? payload.email : userToUpdate.email;
   userToUpdate.name = payload.name ? payload.name : userToUpdate.name;
   userToUpdate.imgUrl = payload.imgUrl ? payload.imgUrl : userToUpdate.imgUrl;
@@ -61,7 +64,7 @@ export const updateUserService = async (
 export const deleteUserService = async (id: string): Promise<object> => {
   const userRepo = AppDataSource.getRepository(Users);
   const user = await userRepo.findOne({ where: { id: id } });
-  if (!user) throw new AppError('Usuário não encontrado', 404);
+
   if (!user.isActive) {
     throw new AppError('Usuário inativo', 400);
   }
