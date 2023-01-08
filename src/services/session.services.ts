@@ -15,7 +15,7 @@ export const createSessionService = async (
   const passwordMatch = await compare(payload.password, user.password);
   if (!passwordMatch) throw new AppError('Email ou senha inválidos!', 403);
 
-  const token = jwt.sign({}, process.env.SECRET_KEY, {
+  const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
     expiresIn: '24h',
     subject: user.email,
   });

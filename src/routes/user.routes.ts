@@ -8,6 +8,7 @@ import {
 import {
   validateUserRequestDataMiddleware,
   verifyTokenMiddleware,
+  verifyUserExistsMiddleware,
 } from '../middlewares/user.middleware';
 import { createUserSchema } from '../schemas/user.schemas';
 
@@ -21,7 +22,17 @@ userRouter.post(
 
 userRouter.get('/:id', verifyTokenMiddleware, retireveUserController);
 
-userRouter.patch('/:id', verifyTokenMiddleware, updateUserController);
-userRouter.delete('/:id', verifyTokenMiddleware, deleteUserController);
+userRouter.patch(
+  '/:id',
+  verifyTokenMiddleware,
+  verifyUserExistsMiddleware,
+  updateUserController,
+);
+userRouter.delete(
+  '/:id',
+  verifyTokenMiddleware,
+  verifyUserExistsMiddleware,
+  deleteUserController,
+);
 
 export default userRouter;

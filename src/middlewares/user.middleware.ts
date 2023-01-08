@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { BaseSchema } from 'yup';
 import { AppError } from '../error';
 import jwt from 'jsonwebtoken';
+import AppDataSource from '../data-source';
+import Users from '../entities/user.entity';
 
 export const validateUserRequestDataMiddleware =
   (schema: BaseSchema) =>
@@ -32,4 +34,18 @@ export const verifyTokenMiddleware = (
     }
     return next();
   });
+};
+
+export const verifyUserExistsMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  const userRepo = AppDataSource.getRepository(Users);
+  const exists = await userRepo.exist({ where: { id: req.params.id } });
+
+  if (!exists) {
+    throw new AppError('User not found!', 404);
+  }
+  return next();
 };

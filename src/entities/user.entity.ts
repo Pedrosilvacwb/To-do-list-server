@@ -7,8 +7,10 @@ import {
   BeforeUpdate,
   DeleteDateColumn,
   BeforeRemove,
+  OneToMany,
 } from 'typeorm';
 import { hash } from 'bcryptjs';
+import Activities from './activities.entity';
 
 @Entity('users')
 class Users {
@@ -38,6 +40,8 @@ class Users {
   deactivate() {
     this.isActive = false;
   }
+  @OneToMany(() => Activities, (activities) => activities.user)
+  activities: Activities[];
 }
 
 export default Users;
